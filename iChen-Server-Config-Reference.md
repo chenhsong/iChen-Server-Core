@@ -1,4 +1,4 @@
-﻿iChen® Server 4.0 Configuration File Reference
+iChen® Server 4.0 Configuration File Reference
 ==============================================
 
 File Name: `iChenServer.config`  
@@ -104,6 +104,7 @@ Web/REST Server Settings
 |`iChenWeb_WWW`|string|`./www`|4.0|Path to the root of the web server contents.|
 |`iChenWeb_TerminalConfigFile`|string|`./terminal/config/default.js`|4.0|Path, relative to that of `iChenWeb_WWW`, to the terminal configuration file.|
 |`iChenWeb_Timeout`|unsigned float|15.0|4.0|Number of minutes to time-out a web server login when idle.|
+|`Https_Certificate_File`|string|none|4.0|HTTPS certificate file.|
 |`Https_Certificate_Hash`|string|none|4.0|HTTPS security hash.|
 
 
@@ -125,7 +126,8 @@ Shared Cache Settings
 
 |Key|Value|Default if missing|iChen® Server Version|Description|
 |---|:---:|:----------------:|:-------------------:|-----------|
-|`KeepSettings`|`true` or `false`|`true`|4.0|If `true`, mold data settings are kept as part of the shared cache information. This is usually set to `false` for cloud shared caches to reduce per-device storage usage.|
+|`KeepSettings`|`true` or `false`|`true`|4.0|If `true`, mold data settings are kept as part of the shared cache information. This is usually set to `false` for cloud-based shared caches to reduce per-device storage usage.|
+|`KeepCycleData`|`true` or `false`|`true`|4.2|If `true`, the last set of cycle data values are kept as part of the shared cache information. This is usually set to `false` for cloud-based shared caches to reduce per-device storage usage.|
 |`CloudCache_Connection`|string|none|4.0|Connection string to a cloud Redis cache for use as a shared cache.|
 
 
