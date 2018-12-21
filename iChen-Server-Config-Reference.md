@@ -3,7 +3,7 @@ iChen® Server 4.0 Configuration File Reference
 
 File Name: `iChenServer.config`  
 Location: Same as server executable  
-Last Edited: 2019-12-18
+Last Edited: 2019-12-20
 
 
 Format
@@ -32,7 +32,7 @@ System Settings
 |`DatabaseVersion`|unsigned short integer|0|4.0|Version of the configuration database. This is for backward-compatibility purposes.|
 |`DatabaseSchema`|string|none|4.0|Schema in the configuration database to use, for database systems that require it (e.g. SQL Server for non-`dbo` schemas).|
 |`DataStore`|string|none|4.0|Connection name for the external archive database (if any).|
-|`JobModesFile`|string|`iChenServerJobModes.json`|4.0|Path to a text file containing the text names of the list of job-mnodes from `ID01` to `ID15`.|
+|`JobModesFile`|string|`./assets/iChenServerJobModes.json`|4.0|Path to a text file containing the text names of the list of job-mnodes from `ID01` to `ID15`.|
 |`iChenWeb_ServerLogs_Path`|string|`./logs`|4.0|Path to the directory/folder containing server logs.|
 
 
@@ -43,6 +43,7 @@ Controller Settings
 |---|:---:|:----------------:|:-------------------:|-----------|
 |`RecvAliveCounter`|unsigned integer|20|4.0|Number of seconds to wait to time-out a controller connection when `ALIVE` messages are not received.|
 |`Controller_Connection_Timeout`|unsigned float|30.0|4.1|Number of minutes to time-out a controller when no _heartbeat_'s are received. A timed-out controller is assumed to be off-line.|
+|`Controller_Mappings_Path`|string|`./assets`|4.2|Path to the directory/folder containing the necessary address/variable mapping tables for different controller types.|
 |`Track_CycleData`|`true` or `false`|`false`|4.2|If `true`. a unique ID will be generated for each cycle data record, allowing tracking.|
 
 
@@ -53,7 +54,8 @@ Controller Serial Number Mappings
 
 |Key|Value|iChen® Server Version|
 |---|:---:|:-------------------:|
-|Mapped controller serial number|Regular expression matching a controller address. For TCP/IP connections, it should be the IP address plus port number in the format `xxx.xxx.xxx.xxx:ppp`. For serial port connections, it should be `COM`_x_ (Windows) or `tty`_xxx_ (Linux).|4.0|
+|Controller serial number|Regular expression matching a controller address. For TCP/IP connections, it should be the IP address plus port number in the format `xxx.xxx.xxx.xxx:ppp`. For serial port connections, it should be `COM`_x_ (Windows) or `tty`_xxx_ (Linux).|4.0|
+|Actual controller serial number|New serial number to use|4.2|
 
 
 Serial Port Listeners
