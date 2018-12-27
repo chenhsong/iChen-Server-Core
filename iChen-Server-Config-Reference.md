@@ -3,7 +3,7 @@ iChen® Server 4.0 Configuration File Reference
 
 File Name: `iChenServer.config`  
 Location: Same as server executable  
-Last Edited: 2019-12-25
+Last Edited: 2019-12-27
 
 
 Format
@@ -73,7 +73,7 @@ iChen® Protocol Settings
 
 |Key|Value|Default if missing|Server Version|Description|
 |---|:---:|:----------------:|:-------------------:|-----------|
-|`Port`|unsigned integer|34954|4.0|Port number to listen for the iChen® protocol.|
+|`Port`|unsigned short integer|34954|4.0|Port number to listen for the iChen® protocol.|
 |`DefaultControllerTimeZone`|-12.0 to 12.0|O/S time-zone|4.2|All controllers connected via the iChen® protocol are assumed to be this number of hours offset from the system's time-zone, unless individually specified in the configuration database.|
 |`SendAliveCounter`|unsigned integer|10|4.0|Number of seconds to wait to send out each `ALIVE` message to each connected controller.|
 |`RestrictMoldsToJobCards`|`true` or `false`|`false`|4.0|If `true`, mold lists provided are restricted to molds allocated under the current job-card. If `false`, all molds are retrieved regardless of the current job-card. This is usually set to `true` when job-card control is used.|
@@ -103,9 +103,10 @@ Web/REST Server Settings
 |---|:---:|:----------------:|:-------------------:|-----------|
 |`iChenWeb_Enable`|`true` or `false`|`true`|4.2|If `false`, the web server is disabled.|
 |`iChenWeb_Port`|unsigned short integer|5757|4.0|Port number of the web server.|
+|`iChenWeb_Http_Redirection_Port`|unsigned short integer|80|4.2|Port number of web server's HTTP end-point when HTTPS is enabled. Any request made to this port will be redirected to `iChenWeb_Port` which serves HTTPS. If zero, then there will be no HTTP end-point when HTTPS is enabled.|
 |`iChenWeb_WWW`|string|`./www`|4.0|Path to the root of the web server contents.|
 |`iChenWeb_TerminalConfigFile`|string|`./terminal/config/default.js`|4.0|Path, relative to that of `iChenWeb_WWW`, to the terminal configuration file.|
-|`iChenWeb_Timeout`|unsigned float|15.0|4.0|Number of minutes to time-out a web server login when idle.|
+|`iChenWeb_Timeout`|unsigned integer|15|4.0|Number of minutes to time-out a web server login when idle.|
 |`Https_Certificate_File`|string|HTTPS is disabled|4.0|HTTPS certificate file.|
 |`Https_Certificate_Hash`|string|HTTPS is disabled|4.0|HTTPS security hash.|
 
