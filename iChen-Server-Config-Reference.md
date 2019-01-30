@@ -3,7 +3,7 @@ iChen® Server 4.0 Configuration File Reference
 
 File Name: `iChenServer.config`  
 Location: Same as server executable  
-Last Edited: 2019-12-27
+Last Edited: 2019-01-30
 
 
 Format
@@ -31,7 +31,7 @@ System Settings
 |`DatabaseEnable`|`true` or `false`|`true`|4.2|If `false`, the configuration database is disabled and the iChen® Server operators in an online-only mode.|
 |`DatabaseVersion`|unsigned short integer|1|4.0|Version of the configuration database. This is for backward-compatibility purposes.|
 |`DatabaseSchema`|string|none|4.0|Schema in the configuration database to use, for database systems that require it (e.g. SQL Server for non-`dbo` schemas).|
-|`DataStore`|string|External archive database is disabled|4.0|Connection name for the external archive database (if any).|
+|`DataStore`|string|External archive database is disabled|4.0|Connection name for the external archive database (if any); the named connection must exist in the application config file under the `<connectionStrings>` section.  Alternatively, the raw ODBC connection string can be provided (version 4.2 and above).|
 |`JobModesFile`|string|`./assets/iChenServerJobModes.json`|4.0|Path to a text file containing the text names of the list of job-mnodes from `ID01` to `ID15`.|
 |`iChenWeb_ServerLogs_Path`|string|`./logs`|4.0|Path to the directory/folder containing server logs.|
 
