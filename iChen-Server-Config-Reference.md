@@ -1,9 +1,9 @@
-iChen® Server 4.0 Configuration File Reference
-==============================================
+iChen® Server 4 Configuration File Reference
+============================================
 
 File Name: `iChenServer.config`  
 Location: Same as server executable  
-Last Edited: 2019-01-30
+Last Edited: 2019-04-11
 
 
 Format
@@ -26,13 +26,13 @@ System Settings
 
 |Key|Value|Default if missing|Server Version|Description|
 |---|:---:|:----------------:|:-------------------:|-----------|
-|`IP`|unsigned short integer|none|4.0|For systems with multiple network adaptors, this allows binding the iChen® Server to a particular network adaptor by specifying its IP address.|
+|`IP`|unsigned short integer|none|4.0|For systems with multiple network adapters, this allows binding the iChen® Server to a particular network adapter by specifying its IP address.|
 |`StandAlone`|`true` or `false`|`true`|4.2|If `true`, the iChen® Server is operating as a single instance. If `false`, the iChen® Server instance is operating as part of a cluster.|
 |`DatabaseEnable`|`true` or `false`|`true`|4.2|If `false`, the configuration database is disabled and the iChen® Server operators in an online-only mode.|
 |`DatabaseVersion`|unsigned short integer|1|4.0|Version of the configuration database. This is for backward-compatibility purposes.|
-|`DatabaseSchema`|string|none|4.0|Schema in the configuration database to use, for database systems that require it (e.g. SQL Server for non-`dbo` schemas).|
+|`DatabaseSchema`|string|none|4.0|Schema in the configuration database to use, for database systems that require it (e.g. SQL Server for non-`dbo` schema's).|
 |`DataStore`|string|External archive database is disabled|4.0|Connection name for the external archive database (if any); the named connection must exist in the application config file under the `<connectionStrings>` section.  Alternatively, the raw ODBC connection string can be provided (version 4.2 and above).|
-|`JobModesFile`|string|`./assets/iChenServerJobModes.json`|4.0|Path to a text file containing the text names of the list of job-mnodes from `ID01` to `ID15`.|
+|`JobModesFile`|string|`./assets/iChenServerJobModes.json`|4.0|Path to a text file containing the text names of the list of job-modes from `ID01` to `ID15`.|
 |`iChenWeb_ServerLogs_Path`|string|`./logs`|4.0|Path to the directory/folder containing server logs.|
 
 
@@ -41,8 +41,8 @@ Controller Settings
 
 |Key|Value|Default if missing|Server Version|Description|
 |---|:---:|:----------------:|:-------------------:|-----------|
-|`RecvAliveCounter`|unsigned integer|20|4.0|Number of seconds to wait to time-out a controller connection when `ALIVE` messages are not received.|
-|`Controller_Connection_Timeout`|unsigned float|30.0|4.1|Number of minutes to time-out a controller when no _heartbeat_'s are received. A timed-out controller is assumed to be off-line.|
+|`RecvAliveCounter`|unsigned integer|20 (20 secconds)|4.0|Number of seconds to wait to time-out a controller connection when `ALIVE` messages are not received.|
+|`Controller_Connection_Timeout`|unsigned float|30.0 (30 minutes)|4.1|Number of minutes to time-out a controller when no _heartbeat_'s are received. A timed-out controller is assumed to be off-line.|
 |`Controller_Mappings_Path`|string|`./assets`|4.2|Path to the directory/folder containing the necessary address/variable mapping tables for different controller types.|
 |`Track_CycleData`|`true` or `false`|`false`|4.2|If `true`. a unique ID will be generated for each cycle data record, allowing tracking.|
 
@@ -75,7 +75,7 @@ iChen® Protocol Settings
 |---|:---:|:----------------:|:-------------------:|-----------|
 |`Port`|unsigned short integer|34954|4.0|Port number to listen for the iChen® protocol.|
 |`DefaultControllerTimeZone`|-12.0 to 12.0|O/S time-zone|4.2|All controllers connected via the iChen® protocol are assumed to be this number of hours offset from the system's time-zone, unless individually specified in the configuration database.|
-|`SendAliveCounter`|unsigned integer|10|4.0|Number of seconds to wait to send out each `ALIVE` message to each connected controller.|
+|`SendAliveCounter`|unsigned integer|10 (10 seconds)|4.0|Number of seconds to wait to send out each `ALIVE` message to each connected controller.|
 |`RestrictMoldsToJobCards`|`true` or `false`|`false`|4.0|If `true`, mold lists provided are restricted to molds allocated under the current job-card. If `false`, all molds are retrieved regardless of the current job-card. This is usually set to `true` when job-card control is used.|
 |`AutoLoginLevel`|0-10|none|4.0|When set, a controller will automatically login to a standard user with the specified authorization level when first connected. If missing, a controller will logout of all users when first connected.|
 
@@ -106,7 +106,7 @@ Web/REST Server Settings
 |`iChenWeb_Http_Redirection_Port`|unsigned short integer|80|4.2|Port number of web server's HTTP end-point when HTTPS is enabled. Any request made to this port will be redirected to `iChenWeb_Port` which serves HTTPS. If zero, then there will be no HTTP end-point when HTTPS is enabled.|
 |`iChenWeb_WWW`|string|`./www`|4.0|Path to the root of the web server contents.|
 |`iChenWeb_TerminalConfigFile`|string|`./terminal/config/default.js`|4.0|Path, relative to that of `iChenWeb_WWW`, to the terminal configuration file.|
-|`iChenWeb_Timeout`|unsigned integer|15|4.0|Number of minutes to time-out a web server login when idle.|
+|`iChenWeb_Timeout`|unsigned integer|15 (15 minutes)|4.0|Number of minutes to time-out a web server login when idle.|
 |`Https_Certificate_File`|string|HTTPS is disabled|4.0|HTTPS certificate file.|
 |`Https_Certificate_Hash`|string|HTTPS is disabled|4.0|HTTPS security hash.|
 
@@ -140,7 +140,7 @@ Azure IOT Hub Settings
 |Key|Value|Default if missing|Server Version|Description|
 |---|:---:|:----------------:|:-------------------:|-----------|
 |`Broadcast_Messages`|`true` or `false`|`false`|4.1|Broadcast Open Protocol® messages to the Azure IOT Hub.|
-|`Broadcast_Interval`|unsigned integer|0|4.2|Number of milliseconds to wait after broadcast each Open Protocol® message to the Azure IOT Hub. This is to avoid hitting throttle limits.|
+|`Broadcast_Interval`|unsigned integer|2000 (2 seconds)|4.2|Number of milliseconds to batch up Open Protocol® message broadcasts to the Azure IOT Hub. This is to avoid hitting throttle limits. A higher throttle will batch up more messages before sending thus reducing data traffic, but will also lead to longer delays between actual events and messages being sent.|
 |`IoTHub_Server_Connection`|string|Use `IoTHub_Device_Connection`|4.1|Connection string to an Azure IOT Hub with `server` authorization.|
 |`IoTHub_Device_Connection`|string|Azure IOT Hub is disabled|4.1|If `IoTHub_Server_Connection` is not set, connection string to a device twin on an Azure IOT Hub shared cache. The marker `{0}` in the connection string will be replaced by the controller's serial number.|
 
