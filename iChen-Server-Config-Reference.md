@@ -3,7 +3,7 @@ iChen® Server 4 Configuration File Reference
 
 File Name: `iChenServer.config`  
 Location: Same as server executable  
-Last Edited: 2019-04-11
+Last Edited: 2019-05-30
 
 
 Format
@@ -26,11 +26,11 @@ System Settings
 
 |Key|Value|Default if missing|Server Version|Description|
 |---|:---:|:----------------:|:-------------------:|-----------|
-|`IP`|unsigned short integer|none|4.0|For systems with multiple network adapters, this allows binding the iChen® Server to a particular network adapter by specifying its IP address.|
+|`IP`|unsigned short integer|*none*|4.0|For systems with multiple network adapters, this allows binding the iChen® Server to a particular network adapter by specifying its IP address.|
 |`StandAlone`|`true` or `false`|`true`|4.2|If `true`, the iChen® Server is operating as a single instance. If `false`, the iChen® Server instance is operating as part of a cluster.|
 |`DatabaseEnable`|`true` or `false`|`true`|4.2|If `false`, the configuration database is disabled and the iChen® Server operators in an online-only mode.|
 |`DatabaseVersion`|unsigned short integer|1|4.0|Version of the configuration database. This is for backward-compatibility purposes.|
-|`DatabaseSchema`|string|none|4.0|Schema in the configuration database to use, for database systems that require it (e.g. SQL Server for non-`dbo` schema's).|
+|`DatabaseSchema`|string|*none*|4.0|Schema in the configuration database to use, for database systems that require it (e.g. SQL Server for non-`dbo` schema's).|
 |`DataStore`|string|External archive database is disabled|4.0|Connection name for the external archive database (if any); the named connection must exist in the application config file under the `<connectionStrings>` section.  Alternatively, the raw ODBC connection string can be provided (version 4.2 and above).|
 |`JobModesFile`|string|`./assets/iChenServerJobModes.json`|4.0|Path to a text file containing the text names of the list of job-modes from `ID01` to `ID15`.|
 |`iChenWeb_ServerLogs_Path`|string|`./logs`|4.0|Path to the directory/folder containing server logs.|
@@ -41,16 +41,16 @@ Controller Settings
 
 |Key|Value|Default if missing|Server Version|Description|
 |---|:---:|:----------------:|:-------------------:|-----------|
-|`RecvAliveCounter`|unsigned integer|20 (20 secconds)|4.0|Number of seconds to wait to time-out a controller connection when `ALIVE` messages are not received.|
+|`SendAliveCounter`|unsigned integer|10 (10 seconds)|4.0|Number of seconds between sending out `ALIVE` messages to each connected controller. (Also applicable for Open Protocol™ connections.)|
+|`RecvAliveCounter`|unsigned integer|20 (20 secconds)|4.0|Number of seconds to wait to time-out a controller connection when `ALIVE` messages are not received. (Also applicable for Open Protocol™ connections.)|
 |`Controller_Connection_Timeout`|unsigned float|30.0 (30 minutes)|4.1|Number of minutes to time-out a controller when no _heartbeat_'s are received. A timed-out controller is assumed to be off-line.|
 |`Controller_Mappings_Path`|string|`./assets`|4.2|Path to the directory/folder containing the necessary address/variable mapping tables for different controller types.|
-|`Track_CycleData`|`true` or `false`|`false`|4.2|If `true`. a unique ID will be generated for each cycle data record, allowing tracking.|
 
 
 Controller Serial Number Mappings
 ---------------------------------
 
-* A configuration file can have more than one controller serial number mapping.
+* A configuration file can have multiple controller serial number mapping.
 
 |Key|Value|Server Version|
 |---|:---:|:-------------------:|
@@ -61,23 +61,22 @@ Controller Serial Number Mappings
 Serial Port Listeners
 ---------------------
 
-* A configuration file can have more than one serial port listener settings.
+* A configuration file can have multiple serial port listener settings.
 
 |Key|Value|Server Version|
 |---|:---:|:-------------------:|
 |Serial port name. Should be `COM`_x_ (Windows) or `tty`_xxx_ (Linux).|Serial port settings in the format _baud_`,`_parity_`,`_bits_`,`_stop_ (e.g. `9600,n,8,1` for 9,600 baud, no parity, 8-bit data, 1 stop bit).|4.0|
 
 
-iChen® Protocol Settings
-------------------------
+iChen® Protocol Settings for Controllers
+----------------------------------------
 
 |Key|Value|Default if missing|Server Version|Description|
 |---|:---:|:----------------:|:-------------------:|-----------|
 |`Port`|unsigned short integer|34954|4.0|Port number to listen for the iChen® protocol.|
 |`DefaultControllerTimeZone`|-12.0 to 12.0|O/S time-zone|4.2|All controllers connected via the iChen® protocol are assumed to be this number of hours offset from the system's time-zone, unless individually specified in the configuration database.|
-|`SendAliveCounter`|unsigned integer|10 (10 seconds)|4.0|Number of seconds to wait to send out each `ALIVE` message to each connected controller.|
 |`RestrictMoldsToJobCards`|`true` or `false`|`false`|4.0|If `true`, mold lists provided are restricted to molds allocated under the current job-card. If `false`, all molds are retrieved regardless of the current job-card. This is usually set to `true` when job-card control is used.|
-|`AutoLoginLevel`|0-10|none|4.0|When set, a controller will automatically login to a standard user with the specified authorization level when first connected. If missing, a controller will logout of all users when first connected.|
+|`AutoLoginLevel`|0-10|*none*|4.0|When set, a controller will automatically login to a standard user with the specified authorization level when first connected. If missing, a controller will logout of all users when first connected.|
 
 
 SMP (Simple Message Protocol) Settings
@@ -88,12 +87,15 @@ SMP (Simple Message Protocol) Settings
 |`SMP_Port`|unsigned short integer|SMP is disabled|4.2|Port number to listen for the SMP (Simple Message Protocol), usually 34958.|
 
 
-Open Protocol® Settings
+Open Protocol™ Settings
 -----------------------
 
 |Key|Value|Default if missing|Server Version|Description|
 |---|:---:|:----------------:|:-------------------:|-----------|
-|`Terminal_Ws_Port`|unsigned short integer|5788|4.0|Port number of the Open Protocol® WebSocket server.|
+|`Terminal_Ws_Port`|unsigned short integer|5788|4.0|Port number of the Open Protocol™ WebSocket server.|
+|`SendAliveCounter`|unsigned integer|10 (10 seconds)|4.0|Number of seconds between sending out `Alive` messages to each connected client. (Also applicable for iChen® protocol controller connections.)|
+|`RecvAliveCounter`|unsigned integer|20 (20 secconds)|4.0|Number of seconds to wait to time-out a controller connection when `Alive` messages are not received. (Also applicable for iChen® protocol controller connections.)|
+|`Track_CycleData`|`true` or `false`|`false`|4.2|If `true`, a unique ID will be generated for each cycle data record, allowing tracking.|
 
 
 Web/REST Server Settings
@@ -139,8 +141,8 @@ Azure IOT Hub Settings
 
 |Key|Value|Default if missing|Server Version|Description|
 |---|:---:|:----------------:|:-------------------:|-----------|
-|`Broadcast_Messages`|`true` or `false`|`false`|4.1|Broadcast Open Protocol® messages to the Azure IOT Hub.|
-|`Broadcast_Interval`|unsigned integer|2000 (2 seconds)|4.2|Number of milliseconds to batch up Open Protocol® message broadcasts to the Azure IOT Hub. This is to avoid hitting throttle limits. A higher throttle will batch up more messages before sending thus reducing data traffic, but will also lead to longer delays between actual events and messages being sent.|
+|`Broadcast_Messages`|`true` or `false`|`false`|4.1|Broadcast Open Protocol™ messages to the Azure IOT Hub.|
+|`Broadcast_Interval`|unsigned integer|2000 (2 seconds)|4.2|Number of milliseconds to batch up Open Protocol™ message broadcasts to the Azure IOT Hub. This is to avoid hitting throttle limits. A higher throttle will batch up more messages before sending thus reducing data traffic, but will also lead to longer delays between actual events and messages being sent.|
 |`IoTHub_Server_Connection`|string|Use `IoTHub_Device_Connection`|4.1|Connection string to an Azure IOT Hub with `server` authorization.|
 |`IoTHub_Device_Connection`|string|Azure IOT Hub is disabled|4.1|If `IoTHub_Server_Connection` is not set, connection string to a device twin on an Azure IOT Hub shared cache. The marker `{0}` in the connection string will be replaced by the controller's serial number.|
 
@@ -150,7 +152,7 @@ Azure Event Hub Settings
 
 |Key|Value|Default if missing|Server Version|Description|
 |---|:---:|:----------------:|:-------------------:|-----------|
-|`EventHub_Connection`|string|Azure Event Hub is disabled|4.1|Connection string to an Azure Event Hub to read broadcast Open Protocol® messages.|
+|`EventHub_Connection`|string|Azure Event Hub is disabled|4.1|Connection string to an Azure Event Hub to read broadcast Open Protocol™ messages.|
 |`EventHub_Group`|string|Azure Event Hub is disabled|4.1|Consumer group of the Azure Event Hub reader.|
 |`EventHub_Storage_Connection`|string|Azure Event Hub is disabled|4.1|Connection string to an Azure Blob Storage for use with the Event Hub Processor.|
 |`EventHub_Storage_Container`|string|Azure Event Hub is disabled|4.1|Name of the container in an Azure Blob Storage for use with the Event Hub Processor.|
